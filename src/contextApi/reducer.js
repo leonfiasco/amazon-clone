@@ -18,6 +18,26 @@ const reducer = (state, action) => {
                 //on the basket such as adding or removing item
                 basket: [...state.basket, action.item],
             };
+        
+        case "REMOVE_FROM_BASKET":
+            // finds first instance of value
+            const index = state.basket.findIndex(
+                (basketItem) => basketItem.id === action.id
+            );
+            let newBasket = [...state.basket];
+            // if the index is greater than 0 then that mean it has found an item
+            if (index >= 0) {
+                newBasket.splice(index, 1)
+            } else {
+                console.warn(
+                `Cant remove product (id: ${action.id}) as its not in basket`
+                );
+            }
+
+            return {
+                ...state,
+                basket: newBasket
+            }
 
         default: 
             return state;
