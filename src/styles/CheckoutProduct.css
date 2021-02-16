@@ -25,3 +25,8 @@
 .checkoutProduct_rating {
     display: flex;
 }
+
+.checkoutProduct_title {
+    font-size: 17px;
+    font-weight: 800;
+}
