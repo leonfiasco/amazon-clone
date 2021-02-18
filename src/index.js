@@ -7,9 +7,9 @@ import { StateProvider } from "./contextApi/StateProvider";
 import reducer, { initialState } from "./contextApi/reducer";
 
 
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 
 ReactDOM.render(

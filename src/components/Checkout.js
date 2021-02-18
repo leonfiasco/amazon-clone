@@ -7,7 +7,7 @@ import { useStateValue } from "../contextApi/StateProvider";
 import "../styles/Checkout.css";
 
 function Checkout() {
-    const [{ basket }, dispatch] = useStateValue();
+    const [{ basket }] = useStateValue();
     return (
         <div className="checkout">
             <div className="checkout_left">
