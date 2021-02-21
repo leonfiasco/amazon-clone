@@ -1,5 +1,4 @@
 import React from 'react';
-
 import Product from "./Product";
 
 import "../styles/Home.css";
