@@ -45,7 +45,7 @@ function Payement() {
 				{/* Payment section - payment method */}
 				<div className='payment_section'>
 					<div className='payment_tile'>
-						<h3>Payment</h3>
+						<h3>Payment Method</h3>
 					</div>
 					<div className='payment_details'></div>
 				</div>
