@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CheckoutProduct from './CheckoutProduct';
 import { useStateValue } from '../contextApi/StateProvider';
 import { Link } from 'react-router-dom';
+import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import CurrencyFormat from 'react-currency-format';
+import { getBasketTotal } from '../contextApi/reducer';
 
 import '../styles/Payment.css';
 
 function Payement() {
 	const [{ basket, user }, dispatch] = useStateValue();
+
+	const stripe = useStripe();
+	const elements = useElements();
+
+	const [error, setError] = useState(null);
+	const [disabled, setDisabled] = useState(true);
+	const [processing, setProcessing] = useState('');
+	const [succeeded, setSucceeded] = useState(false);
+
+	const handleSubmit = (e) => {
+		// stripe logic goes here
+	};
+
+	const handleChange = (e) => {
+		// listen for changes in CardElement
+		// and displays any errors as the customer type their card details
+		setDisabled(e.empty);
+		setError(e.error ? e.error.messsage : '');
+	};
 
 	return (
 		<div className='payment'>
@@ -47,7 +69,27 @@ function Payement() {
 					<div className='payment_tile'>
 						<h3>Payment Method</h3>
 					</div>
-					<div className='payment_details'></div>
+					<div className='payment_details'>
+						{/* stripe will go here */}
+						<form onSubmit={handleSubmit}>
+							<CardElement onChange={handleChange} />
+
+							<div className='payment_priceContainer'>
+								<CurrencyFormat
+									renderText={(value) => <h3>Order Total: {value}</h3>}
+									decimalScale={2}
+									value={getBasketTotal(basket)}
+									displayType={'text'}
+									thousandSeparator={true}
+									prefix={'£'}
+								/>
+								<button disabled={processing || disabled || succeeded}>
+									<span>{processing ? <p>Processing...</p> : 'Buy Now'}</span>
+								</button>
+							</div>
+							{error && <div>{error}</div>}
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
