@@ -33,9 +33,9 @@ function Home() {
 				<div className='home_row'>
 					<Product
 						id='49538094'
-						title='Panda Luxury Memory Foam Bamboo Pillow'
-						price={38.99}
-						image='https://images-na.ssl-images-amazon.com/images/I/81MhsQTerAL._AC_SX679_.jpg'
+						title='LG 42LF652V Smart 42 Inch TV with webOS [Energy Class A+]'
+						price={451.61}
+						image='https://images-na.ssl-images-amazon.com/images/I/511HWXSo3JL._AC_.jpg'
 						rating={5}
 					/>
 					<Product
