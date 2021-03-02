@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Checkout from './components/Checkout';
 import Login from './components/Login';
-import Payment from './components/Payement';
+import Payment from './components/Payment';
 import { auth } from './firebase';
 import { useStateValue } from './contextApi/StateProvider';
 import { loadStripe } from '@stripe/stripe-js';

@@ -20,8 +20,9 @@ function Checkout() {
 						{user ? `Hello, ${user.email.substring(0, user.email.indexOf('@'))}` : ''}
 					</h3>
 					<h2 className='checkout_title'>Your shopping Basket</h2>
-					{basket.map((item) => (
+					{basket.map((item, i) => (
 						<CheckoutProduct
+							key={i}
 							id={item.id}
 							title={item.title}
 							image={item.image}

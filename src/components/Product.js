@@ -30,7 +30,7 @@ function Product({ id, title, image, price, rating }) {
 					{Array(rating)
 						.fill()
 						.map((val, i) => (
-							<p>⭐️</p>
+							<p key={i}>⭐️</p>
 						))}
 				</div>
 			</div>

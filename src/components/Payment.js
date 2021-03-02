@@ -5,11 +5,11 @@ import { Link, useHistory } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import CurrencyFormat from 'react-currency-format';
 import { getBasketTotal } from '../contextApi/reducer';
-import axios from 'axios';
+import axios from '../axios';
 
 import '../styles/Payment.css';
 
-function Payement() {
+function Payment() {
 	const [{ basket, user }, dispatch] = useStateValue();
 
 	const stripe = useStripe();
@@ -28,7 +28,7 @@ function Payement() {
 			const response = await axios({
 				method: 'post',
 				// stripe expects a currency subunits e.g pence for pounds
-				url: `payments/create?total=${getBasketTotal(basket) * 100}`,
+				url: `/payments/create?total=${getBasketTotal(basket) * 100}`,
 			});
 			setClientSecret(response.data.clientSecret);
 		};
@@ -36,25 +36,28 @@ function Payement() {
 		getClientSecret();
 	}, [basket]);
 
+	console.log('this is the client secret >>', clientSecret);
+
 	const handleSubmit = async (e) => {
 		// stripe logic goes here
 		e.preventDefault();
 		setProcessing(true);
 
-		const payload = await stripe.confirmCardSecret(clientSecret, {
-			payment_method: {
-				card: elements.getElement(CardElement),
-			}
-				// destructuring the response to get paymentIntent
-				// paymentIntent = paymentConfirmation
-				.then(({ paymentIntent }) => {
-					setSucceeded(true);
-					setError(null);
-					setProcessing(false);
+		const payload = await stripe
+			.confirmCardPayment(clientSecret, {
+				payment_method: {
+					card: elements.getElement(CardElement),
+				},
+			}) // destructuring the response to get paymentIntent
+			// paymentIntent = paymentConfirmation
+			.then(({ paymentIntent }) => {
+				setSucceeded(true);
+				setError(null);
+				setProcessing(false);
 
-					history.replaceState('/orders');
-				}),
-		});
+				history.replace('/orders');
+			})
+			.catch((err) => console.log(err));
 	};
 
 	const handleChange = (e) => {
@@ -87,8 +90,9 @@ function Payement() {
 						<h3>Review items and delivery</h3>
 					</div>
 					<div className='payment_items'>
-						{basket.map((item) => (
+						{basket.map((item, i) => (
 							<CheckoutProduct
+								key={i}
 								id={item.id}
 								title={item.title}
 								image={item.image}
@@ -130,4 +134,4 @@ function Payement() {
 	);
 }
 
-export default Payement;
+export default Payment;
