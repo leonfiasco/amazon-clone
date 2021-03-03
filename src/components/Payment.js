@@ -49,12 +49,12 @@ function Payment() {
 				payment_method: {
 					card: elements.getElement(CardElement),
 				},
-			}) // destructuring the response to get paymentIntent
-			// paymentIntent = paymentConfirmation
+			})
 			.then(({ paymentIntent }) => {
+				// destructuring the response to get paymentIntent = paymentConfirmation
 				db
 					.collection('users') // go to users collection
-					.doc(user?.id) // finding specific user
+					.doc(user?.uid) // finding specific user
 					.collection('orders') // we then go into that user orders
 					.doc(paymentIntent.id)
 					.set({
@@ -73,7 +73,7 @@ function Payment() {
 
 				history.replace('/orders');
 			})
-			.catch((err) => console.log(err));
+			.catch((err) => console.log('Displaying >>>', err.messsage));
 	};
 
 	const handleChange = (e) => {
